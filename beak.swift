@@ -117,8 +117,12 @@ extension SemanticVersion {
     }
 }
 
-func renameTool(to newName: String) {
-    // TODO: not yet implemented
+func renameTool(to toolName: String) throws {
+    let currentDirectoryUrl = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
+    let enclosingDirectoryName = currentDirectoryUrl.lastPathComponent.replacingOccurrences(of: " ", with: "\\ ")
+    try replaceInFile(path: "Package.swift", substring: enclosingDirectoryName, replacement: toolName)
+    run("mkdir Sources/CLI")
+    run("mv Sources/\(enclosingDirectoryName)/main.swift Sources/CLI/main.swift")
 }
 
 func sortDependencies() {
@@ -129,29 +133,45 @@ func appendDependencyToPackageFile(tagline: String?, githubSubpath: String, vers
     // TODO: not yet implemented
 }
 
-func initializeLicenseFile() {
-    // TODO: not yet implemented
+func initializeLicenseFile(organization: String) throws {
+    try deleteFile("LICENSE.md")
+    run("mv LICENSE.md.sample LICENSE.md")
+    try replaceInFile(path: "LICENSE.md", substring: "{RIGHTHOLDER}", replacement: organization)
+    let currentYear = Calendar(identifier: .gregorian).component(.year, from: Date())
+    try replaceInFile(path: "LICENSE.md", substring: "{YEAR}", replacement: String(currentYear))
 }
 
-func initializeReadMe() {
-    // TODO: not yet implemented
+func initializeReadMe(toolName: String) throws {
+    try deleteFile("README.md")
+    run("mv README.md.sample README.md")
+    try replaceInFile(path: "README.md", substring: "{TOOL_NAME}", replacement: toolName)
+}
+
+// MARK: - File Helpers
+func deleteFile(_ filePath: String) throws {
+    run("[ ! -e \(filePath) ] || rm \(filePath)")
+}
+
+private func replaceInFile(path: String, substring: String, replacement: String) throws {
+    let fileUrl = URL(fileURLWithPath: path)
+    var content = try String(contentsOf: fileUrl, encoding: .utf8)
+    content = content.replacingOccurrences(of: substring, with: replacement)
+    try content.write(to: fileUrl, atomically: false, encoding: .utf8)
 }
 
 // MARK: - Beak Commands
 /// Initializes the command line tool.
-public func initialize(toolName: String) {
+public func initialize(toolName: String, organization: String) throws {
     run("swift package init --type executable")
     makeEditable()
-    renameTool(to: toolName)
-    initializeLicenseFile()
-    initializeReadMe()
+    try renameTool(to: toolName)
+    try initializeLicenseFile(organization: organization)
+    try initializeReadMe(toolName: toolName)
 }
-
 
 /// Prepares project for editing using Xcode with all dependencies configured.
 public func makeEditable() {
     run("swift package generate-xcodeproj")
-//    run("swift package fetch")
 }
 
 /// Adds a new dependency hosted on GitHub with most current version and recommended update path preconfigured.
@@ -160,5 +180,4 @@ public func addDependency(github githubSubpath: String, version: String = "lates
     let latestVersion = fetchGitHubLatestVersion(subpath: githubSubpath)
     appendDependencyToPackageFile(tagline: tagline, githubSubpath: githubSubpath, version: latestVersion)
     sortDependencies()
-//    run("swift package fetch")
 }
