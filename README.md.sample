@@ -1,0 +1,51 @@
+<p align="center">
+    <a href="#installation">Installation</a>
+  • <a href="#usage">Usage</a>
+  • <a href="#contributing">Contributing</a>
+  • <a href="#license">License</a>
+</p>
+
+# {TOOL_NAME}
+
+TODO: Describe your tool here.
+
+## Requirements
+
+- Xcode 9.3+ and Swift 4.1+
+- Xcode Command Line Tools (see [here](http://stackoverflow.com/a/9329325/3451975) for installation instructions)
+
+## Installation
+
+### Using Homebrew:
+
+To install {TOOL_NAME} the first time, simply run the command:
+
+```shell
+$ brew install {TOOL_NAME}
+```
+
+To **update** to the newest version of BartyCrouch when you have an old version already installed run:
+
+```shell
+$ brew update
+$ brew upgrade {TOOL_NAME}
+```
+
+## Usage
+
+TODO: Describe the usage of your tool here.
+
+
+## Contributing
+
+Contributions are welcome. Please just **open an Issue** on GitHub to discuss a point or **send a Pull Request** with your suggestion.
+
+When sending a pull request please also make sure to:
+- **write tests for your changes** in order to make sure they don't break in the future
+- follow the same syntax and semantic in your **commit messages** (see rationale [here](http://chris.beams.io/posts/git-commit/))
+
+Note that there is a framework target within the project to make testing easier.
+
+
+## License
+This library is released under the [MIT License](http://opensource.org/licenses/MIT). See LICENSE for details.
