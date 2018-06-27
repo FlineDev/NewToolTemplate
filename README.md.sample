@@ -43,7 +43,13 @@ When sending a pull request please also make sure to:
 - **write tests for your changes** in order to make sure they don't break in the future
 - follow the same syntax and semantic in your **commit messages** (see rationale [here](http://chris.beams.io/posts/git-commit/))
 
-Note that there is a framework target within the project to make testing easier.
+### Development
+
+In order to use Xcode for development, run the following which will generate an Xcode project with all dependencies installed:
+
+```shell
+$ beak run makeEditable
+```
 
 
 ## License
