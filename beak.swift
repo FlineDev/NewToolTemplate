@@ -119,10 +119,13 @@ extension SemanticVersion {
 
 func renameTool(to toolName: String) throws {
     let currentDirectoryUrl = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-    let enclosingDirectoryName = currentDirectoryUrl.lastPathComponent.replacingOccurrences(of: " ", with: "\\ ")
+    let enclosingDirectoryName = currentDirectoryUrl
     try replaceInFile(path: "Package.swift", substring: enclosingDirectoryName, replacement: toolName)
-    run("mkdir Sources/CLI")
-    run("mv Sources/\(enclosingDirectoryName)/main.swift Sources/CLI/main.swift")
+
+    let escapedEnclosingDirectoryName = enclosingDirectoryName.lastPathComponent.replacingOccurrences(of: " ", with: "\\ ")
+    let escapedToolName = toolName.lastPathComponent.replacingOccurrences(of: " ", with: "\\ ")
+    run("mkdir Sources/\(escapedToolName)")
+    run("mv Sources/\(escapedEnclosingDirectoryName)/main.swift Sources/\(escapedToolName)/main.swift")
 }
 
 func sortDependencies() {
