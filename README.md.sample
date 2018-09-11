@@ -16,41 +16,34 @@ TODO: Describe your tool here.
 
 ## Installation
 
-### Using Homebrew:
+### Using [Mint](https://github.com/yonaskolb/Mint):
 
-To install {TOOL_NAME} the first time, simply run the command:
+To **install** {TOOL_NAME} simply run this command:
 
 ```shell
-$ brew install {TOOL_NAME}
+$ mint install {USER_NAME}/{TOOL_NAME}
 ```
 
-To **update** to the newest version of BartyCrouch when you have an old version already installed run:
+To **update** to the newest version of {TOOL_NAME} when you have an old version already installed run:
 
 ```shell
-$ brew upgrade {TOOL_NAME}
+$ mint update {USER_NAME}/{TOOL_NAME}
 ```
 
 ## Usage
 
-TODO: Describe the usage of your tool here.
+{TOOL_NAME} provides the following sub commands:
+- **`cmd1`**: Description of cmd1.
+- **`cmd2`**: Description of cmd2.
 
+**Shared Flags:**
+- `--verbose`, `-v`: Prints out more detailed information about steps taken.
+
+TODO: Describe further usage of your tool here.
 
 ## Contributing
 
-Contributions are welcome. Please just **open an Issue** on GitHub to discuss a point or **send a Pull Request** with your suggestion.
-
-When sending a pull request please also make sure to:
-- **write tests for your changes** in order to make sure they don't break in the future
-- follow the same syntax and semantic in your **commit messages** (see rationale [here](http://chris.beams.io/posts/git-commit/))
-
-### Development
-
-In order to use Xcode for development, run the following which will generate an Xcode project with all dependencies installed:
-
-```shell
-$ beak run makeEditable
-```
-
+See the file [CONTRIBUTING.md](https://github.com/Flinesoft/NewToolTemplate/blob/stable/CONTRIBUTING.md).
 
 ## License
 This library is released under the [MIT License](http://opensource.org/licenses/MIT). See LICENSE for details.

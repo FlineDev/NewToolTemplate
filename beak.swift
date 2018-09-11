@@ -184,3 +184,9 @@ public func addDependency(github githubSubpath: String, version: String = "lates
     appendDependencyToPackageFile(tagline: tagline, githubSubpath: githubSubpath, version: latestVersion)
     sortDependencies()
 }
+
+/// Generates the LinuxMain.swift file by automatically searching the Tests path for tests.
+public func generateLinuxMain() {
+    run(bash: "sourcery --sources Tests --templates .sourcery/LinuxMain.stencil --output .sourcery --force-parse generated")
+    run(bash: "mv .sourcery/LinuxMain.generated.swift Tests/LinuxMain.swift")
+}
