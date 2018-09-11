@@ -13,7 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ### Removed
 - Some feature that was removed.
 ### Fixed
-- Some bug that was fixed. Should link to issue. [#0](https://github.com/Flinesoft/NewToolTemplate/issues/0)
+- Some bug that was fixed. Should link to issue. [#0](https://github.com/Flinesoft/{TOOL_NAME}/issues/0)
 ### Security
 - Some security related fix.
 

@@ -1,10 +1,10 @@
 # Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/Flinesoft/NewToolTemplate. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/Flinesoft/{TOOL_NAME}. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## Getting Started
 
-This section will tell you how you can get started contributing to NewToolTemplate.
+This section will tell you how you can get started contributing to {TOOL_NAME}.
 
 ### Prerequisites
 
@@ -35,7 +35,7 @@ To check if the **linter** shows any warnings or errors:
 swiftlint
 ```
 
-Alternatively you can also add `swiftlint` as a build script to the target `NewToolTemplateKit` so warnings & errors show off right within Xcode when building. (Recommended)
+Alternatively you can also add `swiftlint` as a build script to the target `{TOOL_NAME}Kit` so warnings & errors show off right within Xcode when building. (Recommended)
 
 To **update the Linux tests** (required after adding/renaming/removing test methods):
 
@@ -48,24 +48,24 @@ This will make sure the Linux CI can also find and run all the tests.
 ### Development Tips
 
 #### Debugging with Xcode
-To run the NewToolTemplate tool right from within Xcode for testing, remove the line
+To run the {TOOL_NAME} tool right from within Xcode for testing, remove the line
 
 ```swift
 cli.goAndExit()
 ```
 
-from the file at path `Sources/NewToolTemplate/main.swift` and replace it with:
+from the file at path `Sources/{TOOL_NAME}/main.swift` and replace it with:
 
 ```swift
-cli.debugGo(with: "newtooltemplate lint -v")
+cli.debugGo(with: "{TOOL_NAME} lint -v")
 ```
 
-Now, when you choose the `NewToolTemplate` scheme in Xcode and run the tool, you will see the command line output right within the Xcode console and can debug using breakpoints like you normally would.
+Now, when you choose the `{TOOL_NAME}` scheme in Xcode and run the tool, you will see the command line output right within the Xcode console and can debug using breakpoints like you normally would.
 
 Beware though that the tool will run within the product build directory, which might look something like this:
 
 ```
-/Users/YOU/Library/Developer/Xcode/DerivedData/NewToolTemplate-aayvtbwcxecganalwqrvbfznkjke/Build/Products/Debug
+/Users/YOU/Library/Developer/Xcode/DerivedData/{TOOL_NAME}-aayvtbwcxecganalwqrvbfznkjke/Build/Products/Debug
 ```
 
 You can print the exact directory of your Xcode by running:
@@ -76,7 +76,7 @@ FileManager.default.currentDirectoryPath
 
 #### Debugging failing Tests
 
-For some reason when running the tests of the `NewToolTemplate-Package` scheme Xcode seems to always fail without running any tests. So the tests need to be run from the command line using `swift test`. To debug this way it might be useful to put `print` statements within the code area that is of your interest.
+For some reason when running the tests of the `{TOOL_NAME}-Package` scheme Xcode seems to always fail without running any tests. So the tests need to be run from the command line using `swift test`. To debug this way it might be useful to put `print` statements within the code area that is of your interest.
 
 If the tests fail with a crash, you might want to locate the crashing code by placing many of the following line to the crashing rule to find the file and line that was last correctly executed:
 

@@ -120,13 +120,16 @@ extension SemanticVersion {
 }
 
 func renameTool(to toolName: String) throws {
-    run("mv Sources/NewToolTemplate Sources/\(toolName)")
-    run("mv Sources/NewToolTemplateKit Sources/\(toolName)Kit")
+    run("mv Sources/{TOOL_NAME} Sources/\(toolName)")
+    run("mv Sources/{TOOL_NAME}Kit Sources/\(toolName)Kit")
+    run("mv Tests/{TOOL_NAME}KitTests Tests/\(toolName)KitTests")
 
     var filesToReplace: [String] = []
 
     filesToReplace += Path.glob("Sources/**/*.swift").map { $0.string }
     filesToReplace += Path.glob("Tests/**/*.swift").map { $0.string }
+    filesToReplace += ["Package.swift", ".sourcery/LinuxMain.stencil", "CHANGELOG.md", "CONTRIBUTING.md"]
+    filesToReplace += ["Tests/\(toolName)KitTests/Globals/Extensions/XCTestCaseExtension.swift"]
 
     for filePath in filesToReplace {
         try replaceInFile(path: filePath, substring: "{TOOL_NAME}", replacement: toolName)
@@ -150,11 +153,12 @@ func initializeLicenseFile(organization: String) throws {
     try replaceInFile(path: "LICENSE.md", substring: "{YEAR}", replacement: String(currentYear))
 }
 
-func initializeReadMe(toolName: String) throws {
+func initializeReadMe(toolName: String, organization: String) throws {
     try deleteFile("README.md")
     run("mv README.md.sample README.md")
     try replaceInFile(path: "README.md", substring: "{TOOL_NAME}", replacement: toolName)
     try replaceInFile(path: "README.md", substring: "{TOOL_COMMAND}", replacement: toolName.lowercased())
+    try replaceInFile(path: "README.md", substring: "{ORGANIZATION}", replacement: organization)
 }
 
 // MARK: - File Helpers
@@ -172,10 +176,12 @@ private func replaceInFile(path: String, substring: String, replacement: String)
 // MARK: - Beak Commands
 /// Initializes the command line tool.
 public func initialize(toolName: String, organization: String) throws {
-    makeEditable()
     try renameTool(to: toolName)
     try initializeLicenseFile(organization: organization)
-    try initializeReadMe(toolName: toolName)
+    try initializeReadMe(toolName: toolName, organization: organization)
+    makeEditable()
+    generateLinuxMain()
+    run("open \(toolName).xcodeproj")
 }
 
 /// Prepares project for editing using Xcode with all dependencies configured.

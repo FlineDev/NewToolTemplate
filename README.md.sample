@@ -43,7 +43,7 @@ TODO: Describe further usage of your tool here.
 
 ## Contributing
 
-See the file [CONTRIBUTING.md](https://github.com/Flinesoft/NewToolTemplate/blob/stable/CONTRIBUTING.md).
+See the file [CONTRIBUTING.md](https://github.com/{ORGANIZATION}/{TOOL_NAME}/blob/stable/CONTRIBUTING.md).
 
 ## License
 This library is released under the [MIT License](http://opensource.org/licenses/MIT). See LICENSE for details.

@@ -1,5 +1,5 @@
 import Foundation
-@testable import NewToolTemplateKit
+@testable import {TOOL_NAME}Kit
 import XCTest
 
 // swiftlint:disable force_try

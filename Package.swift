@@ -3,10 +3,10 @@
 import PackageDescription
 
 let package = Package(
-    name: "NewToolTemplate",
+    name: "{TOOL_NAME}",
     products: [
-        .executable(name: "newprojecttemplate", targets: ["NewToolTemplate"]),
-        .library(name: "NewToolTemplateKit", targets: ["NewToolTemplateKit"])
+        .executable(name: "{TOOL_COMMAND}", targets: ["{TOOL_NAME}"]),
+        .library(name: "{TOOL_NAME}Kit", targets: ["{TOOL_NAME}Kit"])
     ],
     dependencies: [
         .package(url: "https://github.com/kiliankoe/CLISpinner.git", .upToNextMinor(from: "0.3.5")),
@@ -16,21 +16,24 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "NewToolTemplate",
-            dependencies: ["NewToolTemplateKit"]
+            name: "{TOOL_NAME}",
+            dependencies: ["{TOOL_NAME}Kit"],
+            path: "Sources/{TOOL_NAME}"
         ),
         .target(
-            name: "NewToolTemplateKit",
+            name: "{TOOL_NAME}Kit",
             dependencies: [
                 "CLISpinner",
                 "HandySwift",
                 "Rainbow",
                 "SwiftCLI"
-            ]
+            ],
+            path: "Sources/{TOOL_NAME}Kit"
         ),
         .testTarget(
-            name: "NewToolTemplateKitTests",
-            dependencies: ["NewToolTemplateKit", "HandySwift"]
+            name: "{TOOL_NAME}KitTests",
+            dependencies: ["{TOOL_NAME}Kit", "HandySwift"],
+            path: "Tests/{TOOL_NAME}KitTests"
         )
     ]
 )

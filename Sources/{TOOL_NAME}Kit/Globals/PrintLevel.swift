@@ -33,7 +33,7 @@ enum PrintLevel {
 }
 
 func print(_ message: String, level: PrintLevel, file: String? = nil, line: Int? = nil) {
-    switch Globals.outputFormatTarget {
+    switch Constants.outputFormatTarget {
     case .human:
         humanPrint(message, level: level, file: file, line: line)
 
@@ -70,31 +70,31 @@ private func xcodePrint(_ message: String, level: PrintLevel, file: String? = ni
     case .verbose:
         if GlobalOptions.verbose.value {
             if let location = location {
-                print(location, "verbose: NewToolTemplate: ", message)
+                print(location, "verbose: {TOOL_NAME}: ", message)
             } else {
-                print("verbose: NewToolTemplate: ", message)
+                print("verbose: {TOOL_NAME}: ", message)
             }
         }
 
     case .info:
         if let location = location {
-            print(location, "info: NewToolTemplate: ", message)
+            print(location, "info: {TOOL_NAME}: ", message)
         } else {
-            print("info: NewToolTemplate: ", message)
+            print("info: {TOOL_NAME}: ", message)
         }
 
     case .warning:
         if let location = location {
-            print(location, "warning: NewToolTemplate: ", message)
+            print(location, "warning: {TOOL_NAME}: ", message)
         } else {
-            print("warning: NewToolTemplate: ", message)
+            print("warning: {TOOL_NAME}: ", message)
         }
 
     case .error:
         if let location = location {
-            print(location, "error: NewToolTemplate: ", message)
+            print(location, "error: {TOOL_NAME}: ", message)
         } else {
-            print("error: NewToolTemplate: ", message)
+            print("error: {TOOL_NAME}: ", message)
         }
     }
 }

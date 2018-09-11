@@ -1,5 +1,5 @@
 import Foundation
-import NewToolTemplateKit
+import {TOOL_NAME}Kit
 import SwiftCLI
 
 // MARK: - CLI
