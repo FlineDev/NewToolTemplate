@@ -1,9 +1,11 @@
 // beak: Flinesoft/HandySwift @ .upToNextMajor(from: "2.6.0")
 // beak: onevcat/Rainbow @ .upToNextMajor(from: "3.0.3")
+// beak: kylef/PathKit @ .upToNextMajor(from: "0.9.0")
 
 import Foundation
 import HandySwift
 import Rainbow
+import PathKit
 
 // MARK: - Print Helpers
 private enum PrintLevel {
@@ -118,14 +120,18 @@ extension SemanticVersion {
 }
 
 func renameTool(to toolName: String) throws {
-    let currentDirectoryUrl = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-    let enclosingDirectoryName = currentDirectoryUrl
-    try replaceInFile(path: "Package.swift", substring: enclosingDirectoryName, replacement: toolName)
+    run("mv Sources/NewToolTemplate Sources/\(toolName)")
+    run("mv Sources/NewToolTemplateKit Sources/\(toolName)Kit")
 
-    let escapedEnclosingDirectoryName = enclosingDirectoryName.lastPathComponent.replacingOccurrences(of: " ", with: "\\ ")
-    let escapedToolName = toolName.lastPathComponent.replacingOccurrences(of: " ", with: "\\ ")
-    run("mkdir Sources/\(escapedToolName)")
-    run("mv Sources/\(escapedEnclosingDirectoryName)/main.swift Sources/\(escapedToolName)/main.swift")
+    var filesToReplace: [String] = []
+
+    filesToReplace += Path.glob("Sources/**/*.swift").map { $0.string }
+    filesToReplace += Path.glob("Tests/**/*.swift").map { $0.string }
+
+    for filePath in filesToReplace {
+        try replaceInFile(path: filePath, substring: "{TOOL_NAME}", replacement: toolName)
+        try replaceInFile(path: filePath, substring: "{TOOL_COMMAND}", replacement: toolName.lowercased())
+    }
 }
 
 func sortDependencies() {
@@ -148,6 +154,7 @@ func initializeReadMe(toolName: String) throws {
     try deleteFile("README.md")
     run("mv README.md.sample README.md")
     try replaceInFile(path: "README.md", substring: "{TOOL_NAME}", replacement: toolName)
+    try replaceInFile(path: "README.md", substring: "{TOOL_COMMAND}", replacement: toolName.lowercased())
 }
 
 // MARK: - File Helpers
@@ -165,7 +172,6 @@ private func replaceInFile(path: String, substring: String, replacement: String)
 // MARK: - Beak Commands
 /// Initializes the command line tool.
 public func initialize(toolName: String, organization: String) throws {
-    run("swift package init --type executable")
     makeEditable()
     try renameTool(to: toolName)
     try initializeLicenseFile(organization: organization)
@@ -187,6 +193,6 @@ public func addDependency(github githubSubpath: String, version: String = "lates
 
 /// Generates the LinuxMain.swift file by automatically searching the Tests path for tests.
 public func generateLinuxMain() {
-    run(bash: "sourcery --sources Tests --templates .sourcery/LinuxMain.stencil --output .sourcery --force-parse generated")
-    run(bash: "mv .sourcery/LinuxMain.generated.swift Tests/LinuxMain.swift")
+    run("sourcery --sources Tests --templates .sourcery/LinuxMain.stencil --output .sourcery --force-parse generated")
+    run("mv .sourcery/LinuxMain.generated.swift Tests/LinuxMain.swift")
 }
