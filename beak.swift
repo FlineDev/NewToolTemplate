@@ -175,13 +175,13 @@ private func replaceInFile(path: String, substring: String, replacement: String)
 
 // MARK: - Beak Commands
 /// Initializes the command line tool.
-public func initialize(toolName: String, organization: String) throws {
-    try renameTool(to: toolName)
+public func initialize(projectName: String, organization: String) throws {
+    try renameTool(to: projectName)
     try initializeLicenseFile(organization: organization)
-    try initializeReadMe(toolName: toolName, organization: organization)
+    try initializeReadMe(toolName: projectName, organization: organization)
     makeEditable()
     generateLinuxMain()
-    run("open \(toolName).xcodeproj")
+    run("open \(projectName).xcodeproj")
 }
 
 /// Prepares project for editing using Xcode with all dependencies configured.
