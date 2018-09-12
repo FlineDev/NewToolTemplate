@@ -21,13 +21,13 @@ TODO: Describe your tool here.
 To **install** {TOOL_NAME} simply run this command:
 
 ```shell
-$ mint install {USER_NAME}/{TOOL_NAME}
+$ mint install {ORGANIZATION}/{TOOL_NAME}
 ```
 
 To **update** to the newest version of {TOOL_NAME} when you have an old version already installed run:
 
 ```shell
-$ mint update {USER_NAME}/{TOOL_NAME}
+$ mint update {ORGANIZATION}/{TOOL_NAME}
 ```
 
 ## Usage
