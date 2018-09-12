@@ -44,7 +44,7 @@ A preconfigured template for new command line tool projects in Swift.
 Here's a few simple steps on how you can use this project to kick-start your next command line tool project:
 
 1. **Clone this repo** to your own Git server or **download as ZIP file**
-2. Run `beak run initialize --toolName YourToolName --organization "Your Organization"` to **initialize the project**
+2. Run `beak run initialize --projectName YourToolName --organization "Your Organization"` to **initialize the project**
 
 That's it! Start coding. 🎉 😊
 
